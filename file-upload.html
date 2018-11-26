@@ -1,0 +1,29 @@
+<template name="afFileUpload">
+    <input data-schema-key={{schemaKey}} id="url" type="hidden" value="{{value}}" /> 
+    <div id="uploadFile">
+        <div class="uploadButton">
+            {{#if currentUpload}}
+                <div class="ui progress success" data-value="1" data-total="100" id="loading" style = "margin-top:20px">
+                    <div class="bar">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="label">Uploading Files</div>
+                </div>
+            {{/if}}
+            {{#if errorUpload}}
+                <div class="ui negative message">
+                    <div class="header">
+                        {{errorUpload}}
+                    </div>
+                </div> 
+            {{/if}}
+            {{#with existImage}}
+                <img src="{{this}}" class="ui centered medium image"/>
+            {{else}}   
+                <p class="ui positive message">
+                    Upload photo
+                </p> 
+            {{/with}} 
+        </div>
+    </div>
+</template>
