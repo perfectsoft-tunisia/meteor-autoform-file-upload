@@ -46,26 +46,32 @@ Template.afFileUpload.onRendered(function() {
             return 'https://fakeurl.com'
         }, 
         addedfile: (file) => {
-            this.currentUpload.set(true);
-            const $fileUrl = $('#url');
-            $fileUrl.val();
-            upload_files([file], {
-                authorizer: Meteor.call.bind(this, 'authorize_upload'),
-                upload_event: (err, res) => {
-                    if (err) {
-                        this.errorUpload.set(err.reason);
-                    }
-                    $('#loading').progress({
-                        percent: res.total_percent_uploaded
-                    });
-                    if (res.status == 'complete') {
-                        this.currentUpload.set(false);
-                        $fileUrl.val(res.secure_url);
-                        this.linkImage.set(res.secure_url);
-                    }
-                },
-                encoding: 'base64',
-            });
+            let type = file.type.split('/')[0];
+            if (type == 'image') {
+                this.currentUpload.set(true);
+                this.errorUpload.set(false);
+                const $fileUrl = $('#url');
+                $fileUrl.val();
+                upload_files([file], {
+                    authorizer: Meteor.call.bind(this, 'authorize_upload'),
+                    upload_event: (err, res) => {
+                        if (err) {
+                            this.errorUpload.set(err.reason);
+                        }
+                        $('#loading').progress({
+                            percent: res.total_percent_uploaded
+                        });
+                        if (res.status == 'complete') {
+                            this.currentUpload.set(false);
+                            $fileUrl.val(res.secure_url);
+                            this.linkImage.set(res.secure_url);
+                        }
+                    },
+                    encoding: 'base64',
+                });
+            } else {
+                this.errorUpload.set(`Type of file (${file.name}) is not an image`);
+            }
 
         }
     })
