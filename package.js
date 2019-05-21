@@ -1,6 +1,6 @@
 Package.describe({
   name: 'perfectsofttunisia:autoform-file-upload',
-  version: '0.0.1',
+  version: '1.0.0',
   summary: 'Upload image for autoform with dropzone',
   git: 'https://github.com/perfectsoft-tunisia/meteor-autoform-file-upload',
   documentation: 'README.md'
